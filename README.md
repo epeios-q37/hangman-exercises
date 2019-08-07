@@ -69,7 +69,7 @@ French:
 def obtenirMasque(mot,pioches,dev)
 ```
 
-To obtain this:
+This is how the new file looks like:
 
 English:
 

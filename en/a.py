@@ -5,7 +5,7 @@ sys.path.append(".")
 from workshop.en.a import *
 
 """
-# Returns true 'TRUE' when letter is in the word, 'FALSE' otherwise.
+# Must returns 'TRUE' when letter is in the word, 'FALSE' otherwise.
 # 'TRUE' -> 'True' and 'FALSE' -> 'False' at whish.
 """
 def isLetterInWord(letter,word):
