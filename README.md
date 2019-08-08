@@ -7,6 +7,8 @@
 - **Some exercises may need to be switched and will probably be switched in the final version**.
 - **It is however fully functional.**
 
+*NOTA*: You can test this project on [Repl.it](https://q37.info/s/mxmgq3qm). Go [here](https://q37.info/s/srnnb7hj), click on the `+ new repl` button, choose `Python` as language and give the address of this repository in the dedicated field. To launch an exercise, say, the `en/b.py` one, put `from en.b import *` in the `main.py` file, click on the green (`run`) button, and then on the then displayed [QR code](https://q37.info/s/3pktvrj7).
+
 This project shows a new type of exercises for programming tutorials. It only contains the exercises, not (yet?) a complete tutorial.
 
 Each exercise consists to program a feature of the [Hangman game](https://q37.info/s/gtdtk4hp). With the last exercise, the game will be fully operational. The finished game can be see at this address: <https://q37.info/s/jtdqjsx7>.
