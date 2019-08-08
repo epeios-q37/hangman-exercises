@@ -1,28 +1,27 @@
-# Modern exercises for a programming tutorial based on the [Hangman game](https://q37.info/s/gtdtk4hp)
+# Modern exercises for programming tutorials, based on the [Hangman game](https://q37.info/s/gtdtk4hp).
 
-- **This repository is (currently) a proof of concept,**
-- **It is not finished (contributions welcome)**,
-- **some exercises should perhaps be permutated and would probably be in the final version,**
+[![Hangman](https://q37.info/s/pnmjfw39)](https://q37.info/s/jtdqjsx7)
 
-**but it is fully functional.**
+- **The purpose of this repository is (currently) to serve as proof of concept**.
+- **It is under development (contributions welcome)**.
+- **Some exercises may need to be switched and will probably be switched in the final version**.
+- **It is however fully functional.**
 
-This project shows a new type of exercises for programming tutorials. It only contains the exercises, not (yet?) a full tutorial.
+This project shows a new type of exercises for programming tutorials. It only contains the exercises, not (yet?) a complete tutorial.
 
-Each exercise consists in the programming of a functionality of the [Hangman game](https://q37.info/s/gtdtk4hp). When the last exercise is reached, the game will be fully operational.
+Each exercise consists to program a feature of the [Hangman game](https://q37.info/s/gtdtk4hp). With the last exercise, the game will be fully operational. The finished game can be see at this address: <https://q37.info/s/jtdqjsx7>.
 
-Unlike other exercises which usually come with programming tutorials, this exercises will have a web interface, instead of the usual text-based one.
+Nowadays, almost all young people have a smartphone, so they are used to graphical interfaces. They rarely, if ever, had to deal with a text console. Writing programs with a textual interface may be (falsely) considered outdated. This is why all the exercises provided by this project have a web interface, unlike the exercises usually provided with programming tutorials, which almost always have only a text-based interface. 
 
-When a student launches an exercise to test the function which s/he has implemented, a web browser will be opened to display the corresponding interface, which will be used to test the correctness of the exercise.
+When one of the exercises of this project is launched, a web browser will automatically be opened to give access to its interface, which you can see in the above picture. To make testing easier, there will also be a text box that displays the word to guess, and in which you can also enter the word to guess. Of course, this text box will not be available in the final version of the game.
 
-As the last exercise, which will implement all the functionalities of the game, is not currently available, to see how the finished game looks like, go to <https://q37.info/s/jtdqjsx7>.
+The application for a given exercise can also be opened on any device connected to the Internet, by using the URL used by the browser. This is facilitated by the [QR code](https://q37.info/s/3pktvrj7) displayed in the web browser, which can be scanned by a smartphone.
 
-The `en` folder contains the English version of the exercises, and the `fr`, the French one.
+The `en` folder contains the English version of the exercises, and the `fr`, the French one. To adapt the exercises to another language, create a sub-folder in the `workshop` folder, like the `en` or `fr` folder, retrieve the content of one of this folder, and adapt this content to the desired language.
 
-If you want to adapt the exercises for another language, create a sub-folder in the `workshop` folder, like the `en` or `fr` folder, pick the content of one of this folder, and adapt this content to the desired language.
+The content of the `en` or `fr` folder located in the root folder should **not** be provided to the students, as they contain an example of the solution of the exercises, and are intended to help the teachers to give to their students all the information they need to complete the exercises. Only the `workshop` folder should be provided, along with both ZIP files.
 
-The content of the `en` or `fr` folder in the root folder must **not** be provided to the students. Only the `workshop` folder have to, with both ZIP files.
-
-The students will begin with following content:
+To begin, the students will create a file with following content:
 
 English version:
 
@@ -39,7 +38,7 @@ go(globals())
 
 ```
 
-French version (notice the `fr` in the `from workshop.fr.a import *` line):
+French version (note the `fr` in the `from workshop.fr.a import *` line):
 
 ```python
 # coding: utf-8
@@ -48,28 +47,28 @@ import sys
 sys.path.append(".")
 from workshop.fr.a import *
 
-def lettreEstDansMot(lettre, mot):
+def lettreEstDansMot(lettre,mot):
 
 go(globals())
 ```
 
-The exercise consists in implementing the `isLetterInWord(…)` (*fr*: `lettreEstDansMot(…)`) function. To explain to the students what the function must do, and what they will need for this, one can look to the (`en`|`fr`)`/a.py` file, which contains a description of the function, and also an example of code.
+The first exercise consists in implementing the `isLetterInWord(…)` (*fr*: `lettreEstDansMot(…)`) function. As mentioned above, the teacher will use the content of the (`en`/`fr`)`/a.py` file to give to the students all the instructions they need to complete the exercise.
 
-Once this exercise is completed, you tell the students to replace the `a` in `from workshop.en.a import *` (*fr*: `from workshop.fr.a import *`) with a `b` to obtain `from workshop.en.b import *` (*fr*: `from workshop.fr.b import *`). You also tell them to add following function prototype:
+Once this first exercise is completed, the students will be instructed to replace the `a` in `from workshop.en.a import *` (*fr*: `from workshop.fr.a import *`) with a `b` to obtain `from workshop.en.b import *` (*fr*: `from workshop.fr.b import *`), and also to add following function declaration:
 
 English:
 
 ```python
-def getMask(word,guesses,dev)
+def getMask(word,guesses)
 ```
 
 French:
 
 ```python
-def obtenirMasque(mot,pioches,dev)
+def obtenirMasque(mot,pioches)
 ```
 
-This is how the new file looks like:
+This is how the modified file looks like:
 
 English:
 
@@ -80,10 +79,10 @@ import sys
 sys.path.append(".")
 from workshop.en.b import *
 
-def isLetterInWord(*args):
-# What the student wrote in the previous exercise.
+def isLetterInWord(word,guesses):
+# Whatever the student wrote for the previous exercise.
 
-def getMask(word, guesses, dev):
+def getMask(word,guesses):
 
 go(globals())
 ```
@@ -97,16 +96,16 @@ import sys
 sys.path.append(".")
 from workshop.fr.b import *
 
-def lettreEstDansMot(*args):
-# What the student wrote in the previous exercise.
+def lettreEstDansMot(mot,pioches):
+# Whatever the student wrote for the previous exercise.
 
-def obtenirMasque(mot, pioches, dev):
+def obtenirMasque(mot,pioches):
 
 go(globals())
 ```
 
-To tell what is the task of the new function, and what it is needed for the implementation, you may also look at the (`en`/`fr`)`/b.py` file.
+To tell the students what to do, the teachers will also look at the (`en`/`fr`)`/b.py` file.
 
-And so on for the *c*, *d*, *e*… exercises (when they will be available).
+And so on for the *c*, *d*, *e*… exercises (when available).
 
-Between exercises, you will probably have to introduce the concepts that will be useful for the new exercise. For these, there are actually another set of exercises in development, which can be find here: <https://q37.info/s/tpkx4cfk>
+Once an exercise is completed, the teachers will probably have to introduce the concepts that will be relevant for the next exercise. For this purpose, another set of exercises is being developed and can be find here: <https://q37.info/s/tpkx4cfk>.
