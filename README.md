@@ -81,7 +81,7 @@ import sys
 sys.path.append(".")
 from workshop.en.b import *
 
-def isLetterInWord(word,guesses):
+def isLetterInWord(letter,word):
 # Whatever the student wrote for the previous exercise.
 
 def getMask(word,guesses):
@@ -98,7 +98,7 @@ import sys
 sys.path.append(".")
 from workshop.fr.b import *
 
-def lettreEstDansMot(mot,pioches):
+def lettreEstDansMot(lettre,mot):
 # Whatever the student wrote for the previous exercise.
 
 def obtenirMasque(mot,pioches):
