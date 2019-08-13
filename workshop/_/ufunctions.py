@@ -28,13 +28,16 @@ SOFTWARE.
 import sys
 sys.path.append("workshop/_")
 
+import educ
+
 from accessor import *
 from constants import *
 
-def _defUserFunction(name):
-  globals()["uf" + name] = lambda *args: getUserFunctions()[name](*args)
+def _defineUserFunction(name):
+  return educ.defineUserFunction(globals(), "uf", name)
 
-_defUserFunction(F_IS_LETTER_IN_WORD)
-_defUserFunction(F_GET_MASK)
-_defUserFunction(F_UPDATE_BODY)
+
+_defineUserFunction(F_IS_LETTER_IN_WORD)
+_defineUserFunction(F_GET_MASK)
+_defineUserFunction(F_UPDATE_BODY)
 
