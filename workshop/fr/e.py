@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
  
-import workshop._.C as workshop
-from workshop.en._ import *
+import workshop._.E as workshop
+from workshop.fr._ import *
 
 
 def go(globals):

@@ -23,41 +23,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import sys, os
-
 import sys
 sys.path.append("workshop/_")
 
 import educ as _
+from educ import Core
 
 from workshop._._ import *
 
 
-def _reset(dictionnary,dev):
-  resetBase(dictionnary, dev, rfGetMask)
+def _reset():
+  resetBase(getDictionnary(), None)
+  clearAndDisplay(getSecretWord())
 
 
-def _acConnect(core, dom, id):
+def _acConnect(core,dom):
   redraw()
-  _reset(core.dictionnary, True)
-
-def _Submit(dom, bodyParts, letter, word):
-  if ufIsLetterInWord(letter,word):
-    if (not letter in getGoodGuesses()):
-      setGoodGuesses(getGoodGuesses() + letter)
-      displayMask(getSecretWord(), getGoodGuesses(), rfGetMask)
-  else:
-    setErrorsAmount(getErrorsAmount() + 1)
-    rfUpdateBody(bodyParts, getErrorsAmount())
+  dom.disableElements({"ShowGallow", "ShowKeyboard"})
+  _reset()
 
 
 def _acSubmit(core, dom, id):
-  _Submit(dom, core.bodyParts, id.lower(), getSecretWord())
+  pass  # Not used.
 
 
-def _acRestart(core, dom):
-  _reset(core.dictionnary,True)
+def _acRestart():
+  _reset()
 
 
 def main(callback, userFunctions, userFunctionLabels):
-  mainBase(callback, globals(), (F_IS_LETTER_IN_WORD,), userFunctions, userFunctionLabels)
+  mainBase(callback, globals(),
+  (
+    F_PICK_WORD,
+  ), userFunctions, userFunctionLabels)

@@ -30,7 +30,8 @@ import educ as _
 from accessor import *
 from ufunctions import *
 
-from random import randint
+import inspect
+
 
 _I_OUTPUT = "Output"
 _I_SECRET_WORD = "SecretWord"
@@ -38,7 +39,7 @@ _I_SECRET_WORD = "SecretWord"
 _FOLDER = ""
 
 def redraw():
-  _.dom().setLayout("", _.readBody(_FOLDER, _.core().i18n))
+  _.dom().setLayout("", _.readBody(_FOLDER, getI18n()))
 
 
 def drawBodyPart(part):
@@ -46,6 +47,8 @@ def drawBodyPart(part):
 
 
 def _createOutput(text)  :
+  if not text.strip():
+    text = " "   # &nbsp; => c2a0
   output = _.Atlas.createHTML()
   output.putTagAndValue("h1", text)
   return output
@@ -67,7 +70,7 @@ def confirm(text):
   return _.dom().confirm(text)
 
 
-def displayMask(word, guesses, fGetMask=ufGetMask):
+def displayMask(word, guesses, fGetMask):
   clearAndDisplay(fGetMask(word,guesses))
 
 
@@ -75,29 +78,39 @@ def showSecretWord():
   _.dom().removeAttribute(_I_SECRET_WORD, "style")
 
 
-def resetBase(dictionnary, dev, fGetMask = ufGetMask):
-  secretWord = ""
+def _resetHangman():
+  setErrorsAmount(0)
+  setGoodGuesses("")
+  setSecretWord("")
 
-  if dev:
-    secretWord = _.dom().getContent(_I_SECRET_WORD).strip()[:15]
+def _pickRandom(dictionary, suggestion):
+  try:
+    return ufPickWord(dictionary,suggestion)
+  except TypeError:
+    try:
+      return ufPickWord(suggestion)
+    except TypeError:
+      return ufPickWord()
+
+
+def resetBase(dictionary, fGetMask = ufGetMask):
+  _.dom().disableElement("HideSecretWord")
+
+  secretWord = _.dom().getContent(_I_SECRET_WORD).strip()[:15]
 
   redraw()
-  resetHangman()
+  _resetHangman()
 
-  if dev:
-    _.dom().removeAttribute(_I_SECRET_WORD, "style")
-
-  if not secretWord:
-    secretWord = getWord(dictionnary)
+  secretWord = _pickRandom(dictionary, secretWord)
 
   setSecretWord(secretWord)
 
-  if dev:
-    _.dom().setContent(_I_SECRET_WORD, secretWord)
+  _.dom().setContent(_I_SECRET_WORD, secretWord)
 
   print(getSecretWord())
   
-  displayMask(getSecretWord(), "", fGetMask)
+  if fGetMask:
+    displayMask(getSecretWord(), "", fGetMask)
 
 
 def _setUserFunctions(ids, functions, labels):
@@ -111,14 +124,4 @@ def mainBase(callback, globals, ids, userFunctions, userFunctionLabels):
     "Submit": globals["_acSubmit"],
     "Restart": globals["_acRestart"]
     }, getAppTitle())
-
-
-def resetHangman():
-  setErrorsAmount( 0 )
-  setGoodGuesses( "" )
-  setSecretWord( "" )
-
-
-def getWord(dictionnary):
-  return dictionnary[randint(0, len(dictionnary)-1)]
 

@@ -27,41 +27,43 @@ import sys
 sys.path.append("workshop/_")
 
 import educ as _
+from educ import Core
 
 from workshop._._ import *
 
 
-def _reset(dictionnary,dev):
-  resetBase(dictionnary, dev)
+def _reset():
+  resetBase(getDictionnary())
 
 
-def _acConnect(core, dom, id):
+def _acConnect(core, dom):
   redraw()
-  _reset(core.dictionnary,True)
+  dom.disableElement("ShowGallow")
+  _reset()
 
 
-def _Submit(dom, bodyParts, letter, word):
-  if ufIsLetterInWord(letter, word):
+def _Submit(letter):
+  if ufIsLetterInWord(letter, getSecretWord()):
     if (not letter in getGoodGuesses()):
       setGoodGuesses(getGoodGuesses() + letter)
-      displayMask(getSecretWord(), getGoodGuesses(), rfGetMask)
+      displayMask(getSecretWord(), getGoodGuesses(), ufGetMask)
   else:
     setErrorsAmount(getErrorsAmount() + 1)
-    ufUpdateBody(bodyParts, getErrorsAmount())
+    rfUpdateBody(getBodyParts(), getErrorsAmount())
 
 
 def _acSubmit(core, dom, id):
-  _Submit(dom, core.bodyParts, id.lower(), getSecretWord())
+  _Submit(id.lower())
 
 
-def _acRestart(core, dom):
-  _reset(core.dictionnary,True)
+def _acRestart():
+  _reset()
 
 
 def main(callback, userFunctions, userFunctionLabels):
   mainBase(callback, globals(),
   (
+    F_PICK_WORD,
     F_IS_LETTER_IN_WORD,
-    F_GET_MASK,
-    F_UPDATE_BODY
+    F_GET_MASK
   ), userFunctions, userFunctionLabels)

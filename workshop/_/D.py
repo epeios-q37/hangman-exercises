@@ -22,11 +22,47 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
- 
-import workshop._.C as workshop
-from workshop.en._ import *
+
+import sys
+sys.path.append("workshop/_")
+
+import educ as _
+from educ import Core
+
+from workshop._._ import *
 
 
-def go(globals):
-  workshop.main(lambda dom: workshop.Core(dom), globals, FUNCTION_LABELS)
+def _reset():
+  resetBase(getDictionnary())
 
+
+def _acConnect():
+  redraw()
+  _reset()
+
+
+def _Submit(letter):
+  if ufIsLetterInWord(letter, getSecretWord()):
+    if (not letter in getGoodGuesses()):
+      setGoodGuesses(getGoodGuesses() + letter)
+      displayMask(getSecretWord(), getGoodGuesses(), ufGetMask)
+  else:
+    setErrorsAmount(getErrorsAmount() + 1)
+    ufUpdateBody(getBodyParts(), getErrorsAmount())
+
+def _acSubmit(core, dom, id):
+  _Submit(id.lower())
+
+
+def _acRestart():
+  _reset()
+
+
+def main(callback, userFunctions, userFunctionLabels):
+  mainBase(callback, globals(),
+  (
+    F_PICK_WORD,
+    F_IS_LETTER_IN_WORD,
+    F_GET_MASK,
+    F_UPDATE_BODY,
+  ), userFunctions, userFunctionLabels)

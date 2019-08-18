@@ -69,19 +69,27 @@ PARTIES_CORPS = (
 )
 
 FUNCTION_LABELS = {
-    _.F_IS_LETTER_IN_WORD: "lettreEstDansMot",
-    _.F_GET_MASK: "obtenirMasque",
-    _.F_UPDATE_BODY: "majCorps"
+  _.F_GET_MASK: "obtenirMasque",
+  _.F_HANDLE_GUESS: "traiterPioche",
+  _.F_IS_LETTER_IN_WORD: "lettreEstDansMot",
+  _.F_RESET: "reinitialiser",
+  _.F_UPDATE_BODY: "majCorps",
+  _.F_PICK_WORD: "choisirMot",
+  _.F_HANGMAN: "Pendu",
 }
 
 
-class Core(_.Core):
-  i18n = {
+_.setI18n({
     _.S_RESTART: "Recommencer",
-    _.S_SECRET_WORD: "Mot secret"
-  }
-  dictionnary = DICTIONNAIRE
-  bodyParts = PARTIES_CORPS
+    _.S_SECRET_WORD: "Mot secret",
+    _.S_LETTER: "Pioche ",
+    _.S_EXPECTED: "Attendu ",
+    _.S_OBTAINED: "Obtenu ",
+    _.S_TRUE: "vrai",
+    _.S_FALSE: "faux",
+})
+_.setDictionnary(DICTIONNAIRE)
+_.setBodyParts(PARTIES_CORPS)
 
 
 _.setAppTitle("Atelier du jeu du pendu")
