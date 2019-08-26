@@ -23,37 +23,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Reference implementation of user functions.
-
 import sys
 sys.path.append("workshop/_")
 
-from helpers import *
+import educ
 
-from random import randint
-
-def rfPickWord(dictionary, suggestion):
-  return suggestion if suggestion else dictionary[randrange(len(dictionary))]
+from accessor import *
+from constants import *
 
 
-def rfIsLetterInWord(letter, word):
-  return letter in word
+# User items definitions.
+
+def _defineUserFunction(name):
+  return educ.defineUserItem(globals(), "uf", name)
 
 
-def rfGetMask(word, guesses):
-  mask = ""
-  
-  for letter in word:
-    mask += letter if letter in guesses else "_"
+def _defineUserVariable(name):
+  return educ.defineUserItem(globals(), "uv", name)
 
-  return mask
 
-def rfUpdateBody(parts,errorsAmount):
-  if errorsAmount <= len(parts):
-    drawBodyPart(parts[errorsAmount-1])
+def _defineUserClass(name):
+  return educ.defineUserItem(globals(), "uc", name)
 
-  if errorsAmount >= len(parts):
-    drawBodyPart(P_FACE)
 
-def rfPickWord(dictionnary,suggestion=""):
-  return suggestion if suggestion else dictionnary[randint(0, len(dictionnary)-1)]
+# 'list(…)' to avoid 'RuntimeError: dictionary changed size during iteration'.
+for d in list(globals()):
+  prefix = d[:3]
+  if prefix == 'UF_':
+    _defineUserFunction(globals()[d])
+  elif prefix == 'UV_':
+    _defineUserVariable(globals()[d])
+  elif prefix == 'UC_':
+    _defineUserClass(globals()[d])

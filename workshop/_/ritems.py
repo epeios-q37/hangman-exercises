@@ -23,23 +23,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+# Reference implementation of user functions.
+
 import sys
 sys.path.append("workshop/_")
 
-import educ as _
+from helpers import *
 
-def defSetAndGet_(name):
-  globals()["set" + name] = lambda value: _.store(name, value)
-  globals()["get" + name] = lambda: _.recall(name)
+from random import randint
 
-# Internal use.
-defSetAndGet_("AppTitle")
-defSetAndGet_("I18n")
-defSetAndGet_("Dictionary")
-defSetAndGet_("BodyParts")
+def rfPickWord(dictionary, suggestion):
+  return suggestion if suggestion else dictionary[randrange(len(dictionary))]
 
-# Variables for the application.
-defSetAndGet_("ErrorsAmount")
-defSetAndGet_("GoodGuesses")
-defSetAndGet_("SecretWord")
+
+def rfIsLetterInWord(letter, word):
+  return letter in word
+
+
+def rfGetMask(word, guesses):
+  mask = ""
+  
+  for letter in word:
+    mask += letter if letter in guesses else "_"
+
+  return mask
+
+def rfUpdateBody(parts,errorsAmount):
+  if errorsAmount <= len(parts):
+    drawBodyPart(parts[errorsAmount-1])
+
+  if errorsAmount >= len(parts):
+    drawBodyPart(P_FACE)
+
+
+def rfPickWord(dictionary,suggestion=""):
+  return suggestion if suggestion else dictionary[randint(0, len(dictionary)-1)]
+
+
+def rfHandleGuess(hangman, guess, parts):
+  if hangman.handleAndTestGuess(guess):
+    eraseAndDisplay(getMask(hangman.secretWord, hangman.goodGuesses))
+  else:
+    updateBody(parts, hangman.errorsAmount)
+
+
+
 

@@ -4,6 +4,8 @@ import sys
 sys.path.append(".")
 from workshop.fr.e import *
 
+MONTRER_MOT_SECRET = VRAI
+
 """
 Quelques variables vont être gèrées par l'élève. Leur nom est libre.
 Peut être omis, vu que 'raz(…)' va de être appelé avant utilisation
@@ -16,14 +18,10 @@ nbErreurs = 0
 """
 NOTA: les quatres fonctions suivantes ne sont pas utilisées en-dehors de ce fichier.
 Bien entendu, ce seront les versions francisées écrites par les étudiants lors des
-précédents exercices qui seront utilisés (cette remarque vaut également pour les
+précédents exercices qui seront utilisées (cette remarque vaut également pour les
 exercices suivants).
 """
 
-"""
-Le paramètre 'suggestion' peut être omis vu que le champ texte
-pour le mot secret n'est plus utilisé.
-"""
 def pickWord(*args):
   return workshop.rfPickWord(*args)
 
@@ -43,16 +41,21 @@ def updateBody(*args):
 
 """
 Reinitialise les variables et l'affichage pour une nouvelle partie.
+Retourne le mot secret.
 """
-def reinitialiser(dictionnaire):
+def reinitialiser(dictionnaire, suggestion):
   global motSecret, bonnesPioches, nbErreurs
 
-  motSecret = pickWord(dictionnaire,"")
+  motSecret = pickWord(dictionnaire,suggestion)
   bonnesPioches = ""
   nbErreurs = 0
   print(motSecret)
-  redessine()
-  effaceEtAffiche(getMask(motSecret,""))
+  redessiner()
+  effacerEtAfficher(getMask(motSecret,""))
+
+  return motSecret
+
+  
 
 """
 N.B. : NON 'THREAD-SAFE' !!!
@@ -68,7 +71,7 @@ def traiterPioche(pioche,parties):
   if isLetterInWord(pioche, motSecret): # Test non obligatoire.
     if not isLetterInWord(pioche,bonnesPioches):
       bonnesPioches += pioche
-      effaceEtAffiche(getMask(motSecret, bonnesPioches))
+      effacerEtAfficher(getMask(motSecret, bonnesPioches))
   else:
     nbErreurs += 1
     updateBody(parties, nbErreurs)

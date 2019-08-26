@@ -22,22 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
-# User function declarations.
-
-import sys
-sys.path.append("workshop/_")
-
-import educ
-
-from accessor import *
-from constants import *
+ 
+import workshop._.G as workshop
+from workshop.fr._ import *
 
 
-def _defineUserFunction(name):
-  return educ.defineUserFunction(globals(), "uf", name)
+def go(globals):
+  workshop.main(lambda dom: workshop.Core(dom), globals, USER_ITEM_LABELS)
 
-
-for d in list(globals()):  # 'list(…) to avoid 'RuntimeError: dictionary changed size during iteration.
-  if (d[:2]) == 'F_':
-    _defineUserFunction(globals()[d])

@@ -4,6 +4,7 @@ import sys
 sys.path.append(".")
 from workshop.fr.d import *
 
+MONTRER_MOT_SECRET = VRAI
 
 def choisirMot(*args):
   return workshop.rfPickWord(*args)
@@ -13,8 +14,9 @@ def lettreEstDansMot(*args):
     return workshop.rfIsLetterInWord(*args)
 
 
-def obtenirMasque(*args):
+def determinerMasque(*args):
     return workshop.rfGetMask(*args)
+    
 
 """
 - 'parties' (tuple) contient les différentes parties du corps du pendu à
@@ -26,10 +28,10 @@ Lorsque la dernière partie du corps est dessinée, le visage ('P_VISAGE') doit
 """
 def majCorps(parties, nbErreurs):
   if nbErreurs <= len(parties):
-    dessinePartieCorps(parties[nbErreurs-1])
+    dessinerPartieCorps(parties[nbErreurs-1])
 
   if nbErreurs >= len(parties):
-    dessinePartieCorps(P_VISAGE)
+    dessinerPartieCorps(P_VISAGE)
 
 
 go(globals())

@@ -28,7 +28,7 @@ sys.path.append("workshop/_")
 
 import educ as _
 from accessor import *
-from ufunctions import *
+from uitems import *
 
 import inspect
 
@@ -38,9 +38,28 @@ _I_SECRET_WORD = "SecretWord"
 
 _FOLDER = ""
 
+_SHOW_SECRET_WORD = False
+
 def redraw():
   _.dom().setLayout("", _.readBody(_FOLDER, getI18n()))
 
+
+def _addItem(shortcut, items, label, ids):
+  if shortcut in items:
+    ids.append("Hide" + label)
+
+
+def show(items="mgk"):
+  ids = []
+  items = items.lower()
+
+  _addItem("m", items, "Mask", ids)
+  _addItem("g", items, "Gallow", ids)
+  _addItem("r", items, "Report", ids)
+  _addItem("k", items, "Keyboard", ids)
+
+  redraw()
+  _.dom().disableElements(ids)
 
 def drawBodyPart(part):
   _.dom().removeClass(part, "hidden")
@@ -71,54 +90,72 @@ def confirm(text):
 
 
 def displayMask(word, guesses, fGetMask):
-  clearAndDisplay(fGetMask(word,guesses))
+  clearAndDisplay(fGetMask()(word,guesses))
 
 
 def showSecretWord():
   _.dom().removeAttribute(_I_SECRET_WORD, "style")
 
 
-def _resetHangman():
-  setErrorsAmount(0)
-  setGoodGuesses("")
-  setSecretWord("")
-
 def _pickRandom(dictionary, suggestion):
   try:
-    return ufPickWord(dictionary,suggestion)
+    return ufPickWord()(dictionary,suggestion)
   except TypeError:
     try:
-      return ufPickWord(suggestion)
+      return ufPickWord()(suggestion)
     except TypeError:
-      return ufPickWord()
+      return ufPickWord()()
 
+  
+def mainBaseReset(dictionary, suggestion):
+  setErrorsAmount(0)
+  setGoodGuesses("")
 
-def resetBase(dictionary, fGetMask = ufGetMask):
-  _.dom().disableElement("HideSecretWord")
-
-  secretWord = _.dom().getContent(_I_SECRET_WORD).strip()[:15]
-
-  redraw()
-  _resetHangman()
-
-  secretWord = _pickRandom(dictionary, secretWord)
-
+  secretWord = _pickRandom(dictionary, suggestion)
   setSecretWord(secretWord)
 
-  _.dom().setContent(_I_SECRET_WORD, secretWord)
+  return secretWord
 
-  print(getSecretWord())
-  
+def preBaseReset():
+  suggestion = _.dom().getContent(_I_SECRET_WORD).strip()[:15] if _SHOW_SECRET_WORD else ""
+  redraw()
+
+  if _SHOW_SECRET_WORD:
+    _.dom().disableElement("HideSecretWord")
+
+  return suggestion
+
+
+def postBaseReset(secretWord, fGetMask=ufGetMask):
+  if _SHOW_SECRET_WORD:
+    _.dom().setContent(_I_SECRET_WORD, secretWord)
+
   if fGetMask:
-    displayMask(getSecretWord(), "", fGetMask)
+    displayMask(secretWord, "", fGetMask)
 
 
-def _setUserFunctions(ids, functions, labels):
-  return _.setUserFunctions(ids, functions, labels)
+def baseReset(userObject, dictionary, fReset=ufReset, fGetMask=ufGetMask):
+  suggestion = preBaseReset()
+
+  if not fReset:
+    fReset = lambda : mainBaseReset
+  else:
+    fGetMask = None
+
+  secretWord = fReset()(userObject, dictionary, suggestion) if userObject else fReset()(dictionary, suggestion)
+
+  postBaseReset(secretWord,fGetMask)
 
 
-def mainBase(callback, globals, ids, userFunctions, userFunctionLabels):
-  _setUserFunctions(ids, userFunctions, userFunctionLabels)
+def _assignUserFunctions(labels, functions, names):
+  return _.assignUserItems(labels, functions, names)
+
+
+def mainBase(callback, globals, labels, userItems, userItemsNames):
+  global _SHOW_SECRET_WORD
+  _assignUserFunctions(labels, userItems, userItemsNames)
+  if _.assignUserItem(UV_SHOW_SECRET_WORD, userItems, userItemsNames):
+    _SHOW_SECRET_WORD = uvShowSecretWord()
   _.main(_FOLDER, callback, {
      "": globals["_acConnect"],
     "Submit": globals["_acSubmit"],

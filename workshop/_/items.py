@@ -26,20 +26,6 @@ SOFTWARE.
 import sys
 sys.path.append("workshop/_")
 
-import educ as _
-
-def defSetAndGet_(name):
-  globals()["set" + name] = lambda value: _.store(name, value)
-  globals()["get" + name] = lambda: _.recall(name)
-
-# Internal use.
-defSetAndGet_("AppTitle")
-defSetAndGet_("I18n")
-defSetAndGet_("Dictionary")
-defSetAndGet_("BodyParts")
-
-# Variables for the application.
-defSetAndGet_("ErrorsAmount")
-defSetAndGet_("GoodGuesses")
-defSetAndGet_("SecretWord")
+from ritems import *
+from uitems import *
 

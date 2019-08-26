@@ -33,13 +33,12 @@ from workshop._._ import *
 
 
 def _reset():
-  resetBase(getDictionnary(), None)
+  baseReset(None, getDictionary(), None, None)
   clearAndDisplay(getSecretWord())
 
 
 def _acConnect(core,dom):
-  redraw()
-  dom.disableElements({"ShowGallow", "ShowKeyboard"})
+  show("m")
   _reset()
 
 
@@ -54,5 +53,5 @@ def _acRestart():
 def main(callback, userFunctions, userFunctionLabels):
   mainBase(callback, globals(),
   (
-    F_PICK_WORD,
+    UF_PICK_WORD,
   ), userFunctions, userFunctionLabels)

@@ -4,6 +4,7 @@ import sys
 sys.path.append(".")
 from workshop.fr.f import *
 
+MONTRER_MOT_SECRET = VRAI
 
 def pickWord(*args):
   return workshop.rfPickWord(*args)
@@ -22,8 +23,8 @@ def updateBody(*args):
 
 
 class Pendu:
-  def reinitialiser(self, dictionnaire):
-    self.motSecret = pickWord(dictionnaire)
+  def reinitialiser(self, dictionnaire,suggestion):
+    self.motSecret = pickWord(dictionnaire,suggestion)
     self.bonnesPioches = ""
     self.nbErreurs = 0
 
@@ -48,21 +49,24 @@ class Pendu:
 
 
 """
-Pareil que pour le précédent objet,
+Pareil que pour le précédent exercice,
 sauf que l'on utilise un objet.
 """
-def reinitialiser(pendu,dictionnaire):
-  pendu.reinitialiser(dictionnaire)
+def reinitialiser(pendu,dictionnaire,suggestion):
+  pendu.reinitialiser(dictionnaire,suggestion)
   print(pendu.motSecret)
-  redessine()
-  effaceEtAffiche(getMask(pendu.motSecret,""))
+  redessiner()
+  effacerEtAfficher(getMask(pendu.motSecret,""))
+
+  return pendu.motSecret
+  
 
 """
 Idem.
 """
 def traiterPioche(pendu,pioche,parties):
   if pendu.traiterEtTesterPioche(pioche):
-      effaceEtAffiche(getMask(pendu.motSecret, pendu.bonnesPioches))
+      effacerEtAfficher(getMask(pendu.motSecret, pendu.bonnesPioches))
   else:
     updateBody(parties, pendu.nbErreurs)
 

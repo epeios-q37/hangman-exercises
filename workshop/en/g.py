@@ -22,24 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+ 
+import workshop._.G as workshop
+from workshop.en._ import *
 
-import sys
-sys.path.append("workshop/_")
 
-import educ as _
-
-def defSetAndGet_(name):
-  globals()["set" + name] = lambda value: _.store(name, value)
-  globals()["get" + name] = lambda: _.recall(name)
-
-# Internal use.
-defSetAndGet_("AppTitle")
-defSetAndGet_("I18n")
-defSetAndGet_("Dictionary")
-defSetAndGet_("BodyParts")
-
-# Variables for the application.
-defSetAndGet_("ErrorsAmount")
-defSetAndGet_("GoodGuesses")
-defSetAndGet_("SecretWord")
+def go(globals):
+  workshop.main(lambda dom: workshop.Core(dom), globals, USER_ITEM_LABELS)
 

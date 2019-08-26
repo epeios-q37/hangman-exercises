@@ -37,7 +37,7 @@ _REPORT_ANSWERS_HIDDEN = "ReportAnswersHidden"
 
 
 def _reset():
-  resetBase(getDictionnary(), None)
+  baseReset(None, getDictionary(), None, None)
 
 
 def _append(list,item):
@@ -45,14 +45,13 @@ def _append(list,item):
 
 
 def _acConnect(core,dom):
-  redraw()
-  dom.disableElements({"ShowGallow", "ShowMask", "ReportHidden"})
+  show("rk")
   _reset()
 
   
 def _Submit(dom,letter,i18n):
   expected = rfIsLetterInWord(letter, getSecretWord())
-  obtained = ufIsLetterInWord(letter, getSecretWord())
+  obtained = ufIsLetterInWord()(letter, getSecretWord())
 
   disabled = [_REPORT_ANSWERS_HIDDEN]
   enabled = []
@@ -78,6 +77,6 @@ def _acRestart(core, dom):
 
 def main(callback, userFunctions, userFunctionLabels):
   mainBase(callback, globals(), (
-    F_PICK_WORD,
-    F_IS_LETTER_IN_WORD,
+    UF_PICK_WORD,
+    UF_IS_LETTER_IN_WORD,
     ), userFunctions, userFunctionLabels)

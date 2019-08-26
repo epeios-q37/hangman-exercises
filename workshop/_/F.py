@@ -33,19 +33,20 @@ from workshop._._ import *
 
 class Core(_.Core):
   def __init__(self, dom):
-    _.Core.__init__(self,dom,ufHangman())
+    _.Core.__init__(self,dom,ucHangman()())
 
 
 def _reset(hangman):
-  ufReset(hangman,getDictionnary())
+  baseReset(hangman, getDictionary())
 
 
 def _acConnect(core):
+  show()
   _reset(core.userObject)
 
 
 def _Submit(hangman,letter):
-  ufHandleGuess(hangman,letter, getBodyParts())
+  ufHandleGuess()(hangman,letter, getBodyParts())
 
 
 def _acSubmit(core, dom, id):
@@ -59,7 +60,7 @@ def _acRestart(core):
 def main(callback, userFunctions, userFunctionLabels):
   mainBase(callback, globals(),
   (
-    F_RESET,
-    F_HANDLE_GUESS,
-    F_HANGMAN
+    UC_HANGMAN,
+    UF_RESET,
+    UF_HANDLE_GUESS,
   ), userFunctions, userFunctionLabels)
