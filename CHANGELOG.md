@@ -2,7 +2,8 @@
 
 ## 2019-12-13
 
-- adding files to support the new *GitHub* repository importation feature of *Repl.it*,
+- modifications to support the new *GitHub* repository importation feature of *Repl.it*,
+- some updates,
 
 ## 2019-11-08
 
