@@ -10,11 +10,11 @@ Simply retrieve the repository (`git clone https://github.com/epeios-q37/hangman
 
 Alternatively, you can also use [*Repl.it*](https://q37.info/s/srnnb7hj), so you have nothing to install on your computer. Follow this [link](https://q37.info/s/z3whmbfz), click on the green `run` button, and then click on (or scan) the then displayed [QR code](https://q37.info/s/3pktvrj7). To choose another exercise, click on the green `restart` button.
 
-Each exercise consists to program a feature of the [Hangman game](https://q37.info/s/gtdtk4hp). With the last exercise, the game will be fully operational. The finished game can be see at this address: <https://q37.info/s/jtdqjsx7>.
+Each exercise consists in programming a feature of the [Hangman game](https://q37.info/s/gtdtk4hp). With the last exercise, the game will be fully operational. The finished game can be see at this address: <https://q37.info/s/jtdqjsx7>.
 
-When one of the exercises of this project is launched, a web browser will automatically be opened to give access to its interface, which you can see in the above picture. To make testing easier, there will also be a text box that displays the word to guess, and in which you can also enter the word to guess. Of course, this text box will not be available in the final version of the game.
+When one of the exercises is launched, a web browser will automatically be opened to give access to its interface, like the one you can see in the above picture. To make it easier for students to test the code they are writing, there is also a text box that will display the word to guess, and in which you can also enter the word to guess. Of course, this text box will not be available in the final version of the game.
 
-The application for a given exercise can also be opened on any device connected to the Internet, by using the URL used by the browser. This is facilitated by the [QR code](https://q37.info/s/3pktvrj7) displayed in the web browser, which can be scanned by a smartphone.
+The application for a given exercise can also be opened on any device with a modern web browser connected to the Internet, by using the URL displayed in the browser. This is facilitated by the [QR code](https://q37.info/s/3pktvrj7) displayed in the web browser, which can be scanned by a smartphone.
 
 The `en` folder contains the English version of the exercises, and the `fr`, the French one. To adapt the exercises to another language, create a sub-folder in the `workshop` folder, like the `en` or `fr` folder, retrieve the content of one of this folder, and adapt this content to the desired language.
 
