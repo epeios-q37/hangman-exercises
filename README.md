@@ -1,6 +1,6 @@
 # Modern programming exercises, featuring the [Hangman game](https://q37.info/s/gtdtk4hp).
 
-[![Run on Repl.it](https://repl.it/badge/github/epeios-q37/hangman-exercises)](https://q37.info/s/z3whmbfz) [![License](https://img.shields.io/pypi/l/atlastk.svg?style=plastic)](https://github.com/epeios-q37/atlas-python/blob/master/LICENSE)
+[![Run on Repl.it](https://repl.it/badge/github/epeios-q37/hangman-exercises)](https://q37.info/s/z3whmbfz) [![License](https://img.shields.io/pypi/l/atlastk.svg?style=plastic)](https://github.com/epeios-q37/hangman-exercises/blob/master/LICENSE)
 
 This project shows an example of modern programming exercises, featuring the [Hangman game](https://q37.info/s/gtdtk4hp), as shown below. See <https://q37.info/s/cbms43s9> for the rationale behind this project.
 
@@ -8,7 +8,7 @@ This project shows an example of modern programming exercises, featuring the [Ha
 
 Simply retrieve the repository (`git clone https://github.com/epeios-q37/hangman-exercises`, or get the corresponding *ZIP* file here: <https://q37.info/s/f7mt4s7n>), and, in a console, in the root directory, launch `python main.py` (you can change the language of the exercises by modifying `main.py`). You can also specifically launch an exercise with `python (en|fr)/(a|b|…|f|g).py` (for example: `python fr/b.py`). You can (should) also use `python3` instead of `python`.
 
-Alternatively, you can also clone this repository on [*Repl.it*](https://q37.info/s/srnnb7hj), so you have nothing to install on your computer. Follow this [link](https://q37.info/s/z3whmbfz), click on the green `run` button, and then click on (or scan) the then displayed [QR code](https://q37.info/s/3pktvrj7). To choose another exercise, click on the green `restart` button.
+Alternatively, you can also use [*Repl.it*](https://q37.info/s/srnnb7hj), so you have nothing to install on your computer. Follow this [link](https://q37.info/s/z3whmbfz), click on the green `run` button, and then click on (or scan) the then displayed [QR code](https://q37.info/s/3pktvrj7). To choose another exercise, click on the green `restart` button.
 
 Each exercise consists to program a feature of the [Hangman game](https://q37.info/s/gtdtk4hp). With the last exercise, the game will be fully operational. The finished game can be see at this address: <https://q37.info/s/jtdqjsx7>.
 
