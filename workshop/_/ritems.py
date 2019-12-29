@@ -32,21 +32,22 @@ from helpers import *
 
 from random import randint
 
-def rfPickWord(dictionary, suggestion):
-  return suggestion if suggestion else dictionary[randrange(len(dictionary))]
+def rfPickWord(suggestion,randomWord):
+  return suggestion if suggestion else randomWord
 
 
-def rfIsLetterInWord(letter, word):
+def rfIsLetterInWord(letter,word):
   return letter in word
 
 
-def rfGetMask(word, guesses):
+def rfGetMask(word,guesses):
   mask = ""
   
   for letter in word:
     mask += letter if letter in guesses else "_"
 
   return mask
+
 
 def rfUpdateBody(parts,errorsAmount):
   if errorsAmount <= len(parts):
@@ -56,15 +57,11 @@ def rfUpdateBody(parts,errorsAmount):
     drawBodyPart(P_FACE)
 
 
-def rfPickWord(dictionary,suggestion=""):
-  return suggestion if suggestion else dictionary[randint(0, len(dictionary)-1)]
-
-
-def rfHandleGuess(hangman, guess, parts):
+def rfHandleGuess(hangman,guess,parts):
   if hangman.handleAndTestGuess(guess):
-    eraseAndDisplay(getMask(hangman.secretWord, hangman.goodGuesses))
+    eraseAndDisplay(getMask(hangman.secretWord,hangman.goodGuesses))
   else:
-    updateBody(parts, hangman.errorsAmount)
+    updateBody(parts,hangman.errorsAmount)
 
 
 

@@ -6,73 +6,50 @@ from workshop.fr.f import *
 
 MONTRER_MOT_SECRET = VRAI
 
+"""
+Á des fins de simplification, les fonctions développées par l'étudiant dans les
+précédents exercices font appels à des fonctions internes. Bien entendu, les
+étudiants utiliseront le code qu'ils ont écrits lors des précédents exercices.
+"""
+
 
 def choisirMot(*args):
   return workshop.rfPickWord(*args)
 
 
-def isLetterInWord(*args):
+def lettreEstDansMot(*args):
     return workshop.rfIsLetterInWord(*args)
 
 
-def getMask(*args):
+def donnerMasque(*args):
     return workshop.rfGetMask(*args)
-
-
-def updateBody(*args):
-  return workshop.rfUpdateBody(*args)
-
-"""
-Allons-y avec la programmation orientée objet.
-Le nom de la classe doit être 'Pendu',
-mais le nom des variables et des méthodes est libre.
-"""
-class Pendu:
-    def reinitialiser(self, dictionnaire,suggestion):
-    self.motSecret = choisirMot(dictionnaire,suggestion)
-    self.bonnesPioches = ""
-    self.nbErreurs = 0
-
-  def __init__(self):
-    self.motSecret = ""
-    self.bonnesPioches = ""
-    self.nbErreurs = 0
     
-  """
-  Mettre à jour le nombre d'erreurs ou les bonnes pioches selon
-  que 'pioche' est correct ou non.
-  Si 'pioche' est bon, retourner VRAI, sinon retourner FAUX.
-  """
-  def traiterEtTesterPioche(self, pioche):
-    if isLetterInWord(pioche, self.motSecret):
-      if not isLetterInWord(pioche, self.bonnesPioches):
-        self.bonnesPioches += pioche
-      return VRAI
-    else:
-      self.nbErreurs += 1
-      return FAUX
-
 
 """
-Pareil que pour le précédent exercice,
-sauf que l'on utilise un objet.
+- 'parties' (tuple) contient les différentes parties du corps du pendu à
+  dessiner en fonction du nombre d'erreurs '(P_TETE,P_TRONC,P_BRAS_GAUCHE…)' ;
+- 'nbErreurs': nombre d'erreurs.
+Dessiner la partie du corps correspondant au nombre d'erreurs.
+Lorsque la dernière partie du corps est dessinée, le visage ('P_VISAGE') doit
+également être dessiné.
 """
-def reinitialiser(pendu,dictionnaire,suggestion):
-  pendu.reinitialiser(dictionnaire,suggestion)
-  print(pendu.motSecret)
-  redessiner()
-  effacerEtAfficher(getMask(pendu.motSecret,""))
+def majCorps(nombreErreurs):
+  if nombreErreurs == 1:
+    partieCorps = P_TETE
+  elif nombreErreurs == 2:
+    partieCorps = P_TRONC
+  elif nombreErreurs == 3:
+    partieCorps = P_BRAS_GAUCHE
+  elif nombreErreurs == 4:
+    partieCorps = P_BRAS_DROIT
+  elif nombreErreurs == 5:
+    partieCorps = P_PIED_DROIT
+  elif nombreErreurs == 6:
+    partieCorps = P_PIED_GAUCHE
+  elif nombreErreurs == 7:
+    partieCorps = P_VISAGE
 
-  return pendu.motSecret
-  
-
-"""
-Idem.
-"""
-def traiterPioche(pendu,pioche,parties):
-  if pendu.traiterEtTesterPioche(pioche):
-      effacerEtAfficher(getMask(pendu.motSecret, pendu.bonnesPioches))
-  else:
-    updateBody(parties, pendu.nbErreurs)
+  if ( nombreErreurs):
+    dessinerPartieCorps(partieCorps)
 
 go(globals())

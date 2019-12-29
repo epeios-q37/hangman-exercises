@@ -7,27 +7,17 @@ from workshop.fr.c import *
 MONTRER_MOT_SECRET = VRAI
 
 
-def choisirMot(*args):
-  return workshop.rfPickWord(*args)
-  
-
-def lettreEstDansMot(*args):
-    return workshop.rfIsLetterInWord(*args)
-
 """
-Retourner une chaîne de caractères contenant 'mot' (qui est en minuscule) où
-chaque lettre qui n'est pas contenue dans 'pioches' (également en minuscules)
-est remplacée par le caractère '_'.
+- 'motAuHasard': un mot aléatoire ;
+- 'suggestion'; le contenu du champ texte du mot secret ;
+  utilisé seulement en mode 'dev'.
+Retourne 'suggestion' si non vide, 'motAuHasard' sinon.
 """
-def determinerMasque(mot, pioches):
-    masque = ""
+def choisirMot(suggestion,motAuHasard):
+  if suggestion:
+    return suggestion
+  else:
+    return motAuHasard
 
-    for lettre in mot:
-        if lettreEstDansMot(lettre,pioches):
-            masque += lettre
-        else:
-            masque += "_"
-
-    return masque
 
 go(globals())
