@@ -23,48 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Reference implementation of user functions.
-
 import sys
 sys.path.append("workshop/_")
 
-from helpers import *
-
-from random import randint
-
-def rfPickWord(suggestion,randomWord):
-  return suggestion if suggestion else randomWord
-
-
-def rfIsLetterInWord(letter,word):
-  return letter in word
-
-
-def rfGetMask(word,guesses):
-  mask = ""
-  
-  for letter in word:
-    mask += letter if letter in guesses else "_"
-
-  return mask
-
-
-def rfUpdateBody(errorsAmount):
-  parts = getBodyParts()
-
-  if errorsAmount <= len(parts):
-    drawBodyPart(parts[errorsAmount-1])
-
-  if errorsAmount >= len(parts):
-    drawBodyPart(P_FACE)
-
-
-def rfHandleGuess(hangman,guess):
-  if hangman.handleAndTestGuess(guess):
-    display(getMask(hangman.secretWord,hangman.goodGuesses))
-  else:
-    updateBody(hangman.errorsAmount)
-
-
-
-
+from J import *

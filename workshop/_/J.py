@@ -23,48 +23,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Reference implementation of user functions.
-
 import sys
 sys.path.append("workshop/_")
 
-from helpers import *
+import educ as _
 
-from random import randint
-
-def rfPickWord(suggestion,randomWord):
-  return suggestion if suggestion else randomWord
+from workshop._._ import *
 
 
-def rfIsLetterInWord(letter,word):
-  return letter in word
+class Core(_.Core):
+  def __init__(self,dom):
+    _.Core.__init__(self,dom,ucHangman()())
 
 
-def rfGetMask(word,guesses):
-  mask = ""
-  
-  for letter in word:
-    mask += letter if letter in guesses else "_"
-
-  return mask
+def _reset(hangman):
+  baseReset(hangman,getRandomWord())
 
 
-def rfUpdateBody(errorsAmount):
-  parts = getBodyParts()
-
-  if errorsAmount <= len(parts):
-    drawBodyPart(parts[errorsAmount-1])
-
-  if errorsAmount >= len(parts):
-    drawBodyPart(P_FACE)
+def _acConnect(core):
+  show()
+  _reset(core.userObject)
 
 
-def rfHandleGuess(hangman,guess):
-  if hangman.handleAndTestGuess(guess):
-    display(getMask(hangman.secretWord,hangman.goodGuesses))
-  else:
-    updateBody(hangman.errorsAmount)
+def _Submit(hangman,letter):
+  try:
+    ufHandleGuess()(hangman,letter,getSecretWord())
+  except TypeError:
+    ufHandleGuess()(hangman,letter)
 
 
+def _acSubmit(core,dom,id):
+  _Submit(core.userObject,id.lower())
 
 
+def _acRestart(core):
+  _reset(core.userObject)
+
+
+def main(callback,userFunctions,userFunctionLabels):
+  mainBase(callback,globals(),
+  (
+    UC_HANGMAN,
+    UF_RESET,
+    UF_HANDLE_GUESS,
+  ),userFunctions,userFunctionLabels)

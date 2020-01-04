@@ -36,7 +36,7 @@ _I_SECRET_WORD = "SecretWord"
 
 _FOLDER = ""
 
-_SHOW_SECRET_WORD = False
+_DISCLOSE_SECRET_WORD = False
 
 def redraw():
   _.dom().setLayout("",_.readBody(_FOLDER,getI18n()))
@@ -72,10 +72,6 @@ def _createOutput(text)  :
 
 
 def display(text):
-  _.dom().appendLayout(_I_OUTPUT,_createOutput(text))
-
-
-def clearAndDisplay(text):
   _.dom().setLayout(_I_OUTPUT,_createOutput(text))
 
 
@@ -88,11 +84,16 @@ def confirm(text):
 
 
 def displayMask(word,guesses,fGetMask):
-  clearAndDisplay(fGetMask()(word,guesses))
+  display(fGetMask()(word,guesses))
 
 
-def showSecretWord():
-  _.dom().removeAttribute(_I_SECRET_WORD,"style")
+def _showSecretWordTextBox():
+  _.dom().disableElement("HideSecretWord")
+
+
+def discloseSecretWord(word):
+  _showSecretWordTextBox()
+  _.dom().setContent(_I_SECRET_WORD,word)
 
 
 def _pickWord(suggestion,randomWord):
@@ -117,27 +118,24 @@ def mainBaseReset(suggestion,randomWord):
   setErrorsAmount(0)
   setGoodGuesses("")
 
-  secretWord = _pickWord(suggestion,randomWord)
-  setSecretWord(secretWord)
-
-  return secretWord
+  return _pickWord(suggestion,randomWord)
 
 def preBaseReset():
-  suggestion = _.dom().getContent(_I_SECRET_WORD).strip()[:15] if _SHOW_SECRET_WORD else ""
+  suggestion = _.dom().getContent(_I_SECRET_WORD).strip()[:15] if _DISCLOSE_SECRET_WORD else ""
   redraw()
-
-  if _SHOW_SECRET_WORD:
-    _.dom().disableElement("HideSecretWord")
 
   return suggestion
 
 
 def postBaseReset(secretWord,fGetMask=ufGetMask):
-  if _SHOW_SECRET_WORD:
-    _.dom().setContent(_I_SECRET_WORD,secretWord)
+  setSecretWord(secretWord)
 
-  if fGetMask:
-    displayMask(secretWord,"",fGetMask)
+  if secretWord:
+    if _DISCLOSE_SECRET_WORD:
+      discloseSecretWord(secretWord)
+
+    if fGetMask:
+      displayMask(secretWord,"",fGetMask)
 
 
 def baseReset(userObject,randomWord,fReset=ufReset,fGetMask=ufGetMask):
@@ -161,10 +159,10 @@ def mainBase(callback,globals,labels,userItems,userItemsNames):
 # Uncomment for exceptions behaving normally again,
 # instead of being displayed in an alert box.
 #  _.useRegularExceptions()
-  global _SHOW_SECRET_WORD
+  global _DISCLOSE_SECRET_WORD
   _assignUserFunctions(labels,userItems,userItemsNames)
-  if _.assignUserItem(UV_SHOW_SECRET_WORD,userItems,userItemsNames):
-    _SHOW_SECRET_WORD = uvShowSecretWord()
+  if _.assignUserItem(UV_DISCLOSE_SECRET_WORD,userItems,userItemsNames):
+    _DISCLOSE_SECRET_WORD = uvDiscloseSecretWord()
   _.main(os.path.join("workshop","assets",_FOLDER,"Head.html"),callback,{
      "": globals["_acConnect"],
     "Submit": globals["_acSubmit"],

@@ -2,11 +2,13 @@
 
 ## Présentation
 
-Le série d'exercices qui suit permet de programmer une version du [jeu du pendu](https://fr.wikipedia.org/wiki/Le_Pendu_(jeu)) jouable sur smartphone, et qui ressemblera à ça :
+La série d'exercices qui suit permet de programmer une version du [jeu du pendu](https://fr.wikipedia.org/wiki/Le_Pendu_(jeu)) jouable sur smartphone, et qui ressemblera à ça :
 
 ![](assets/Pendu.png)
 
-Le professeur vous indiquera comment procéder pour lancer les exercices.
+Le professeur vous indiquera comment accèder aux exercices et les utiliser. Ce sera probablement en utilisant l'un des deux liens ci-dessous :
+- pour travailler sur les exercices dans un environnement de développement en ligne (session *Repl.it*) : <https://q37.info/s/jzw7knww> ;
+- pour travailler sur les exercices en utilisant l'interpréteur *Python* installé sur un ordinateur (fichier *ZIP*) : <https://q37.info/s/xht7cvwk>.
 
 ## Exercice *a*
 
@@ -28,7 +30,7 @@ def choisirMot():
 go(globals())
 ```
 
-La variable booléenne `MONTRER_MOT_SECRET` permet de configurer le jeu pour qu'il affiche le mot à deviner. Sans cette possibilité, il serait compliqué de tester le jeu pour vérifier s'il fonctionne correctement.  On donnera à cette variable la valeur `VRAI` (ou `True`) tout au long du développement et de la mise au point du jeu, et `FAUX` (ou `False`) une fois que le jeu sera au point, pour que le mot à deviner ne soit plus affiché.
+La variable booléenne `DIVULGUER_MOT_SECRET` permet de configurer le jeu pour qu'il affiche le mot à deviner. Sans cette possibilité, il serait compliqué de tester le jeu pour vérifier s'il fonctionne correctement.  On donnera à cette variable la valeur `VRAI` (ou `True`) tout au long du développement et de la mise au point du jeu, et `FAUX` (ou `False`) une fois que le jeu sera au point, pour que le mot à deviner ne soit plus affiché.
 
 *Nota* : lancer l'exécution de ce fichier en l'état provoquera l'affichage d'un message d'erreur.
 
@@ -324,7 +326,7 @@ Sachant que :
 
 écrire le code de la fonction `majCorps` pour qu'elle dessine la partie du corps correspondant au nombre d'erreurs.
 
-Pour cette tâche, utiliser la fonction `dessinerPartieCorps` qui peut prendre, comme paramètre, une des valeurs suivantes :
+Pour cette tâche, utiliser la fonction `dessinerPartieCorps` qui prend, comme paramètre, une des valeurs suivantes :
 
 ```python
 P_TETE          # pour dessiner la tête,
@@ -336,7 +338,7 @@ P_PIED_DROIT    # pour dessiner le pied droit,
 P_VISAGE        # pour dessiner la visage.
 ```
 
-`maj` signifie *mise-à-jour*, car la fonction est appelée à chaque nouvelle erreur. Cela veut dire que la valeur du paramètre `nombreErreurs` est incrémenté d'un appel à l'autre. Aussi ne va-t-on pas redessiner tous le corps, mais juste la partie correspondant au nombre d'erreurs.
+`maj` signifie *mise-à-jour*, car la fonction est appelée à chaque nouvelle erreur. Cela veut dire que la valeur du paramètre `nombreErreurs` est incrémenté d'un appel à l'autre. Aussi ne va-t-on pas redessiner tout le corps, mais juste la partie correspondant au nombre d'erreurs.
 
 ### Pseudo-code
 
@@ -344,7 +346,7 @@ P_VISAGE        # pour dessiner la visage.
 > &nbsp;&nbsp;Dessiner la tête  
 > Sinon si `nombreErreurs` est égal à 2  
 > &nbsp;&nbsp;Dessiner le tronc  
-> Sinon si `nombreErreur` est égal à 3  
+> Sinon si `nombreErreurs` est égal à 3  
 > &nbsp;&nbsp;Dessiner le bras gauche  
 > 
 > *et ainsi de suite pour dessiner le bras droit, le pied gauche, le pied droit et enfin le visage.*
@@ -357,3 +359,88 @@ P_VISAGE        # pour dessiner la visage.
 
 - Pour chaque lettre contenue dans le mot à deviner, vérifier que le jeu se comporte comme dans l'exercice précédent ;
 - pour chaque lettre **non** contenue dans le mot à deviner, vérifier que le dessin du pendu se complète peu à peu.
+
+## Exercice *g*
+
+### Objectif
+
+Simplification de la fonction `majCorps`, grâce à l'utilisation d'un *tuple*.
+
+### Préparation
+
+- Dans la première ligne, remplacer le `f` par un `g`.
+
+```python
+from workshop.fr.g import *
+
+…
+
+def majCorps(nombreErreurs):    
+    …
+
+go(globals())
+```
+
+
+### Tâches
+
+- Créer un *tuple* appelé `PARTIES_CORPS` contenant les constantes `P_…` listées dans l'exercice précédent, dans l'ordre dans lequel les parties du corps correspondantes doivent être dessinées ;
+- modifier la fonction `majCorps` pour qu'elle réalise la même tâche que dans l'exercice précédent, mais en utilisant le *tuple* ci-dessus.
+
+### Pseudo-code
+
+> Affecter à `PARTIES_CORPS` un *tuple* contenant les constantes `P_…`
+>
+> Dessiner la partie du corps stockée dans `PARTIES_CORPS` correspondant à `nombreErreurs`
+
+### Aperçu
+
+Le même que pour l'exercice précédent.
+
+### Test
+
+Les mêmes que pour l'exercice précédent.
+
+## Exercice *h*
+
+### Objectif
+
+Lorsque le dernier membre du corps du pendu est dessiné, le visage doit également être dessiné, pour indiquer que la partie est perdue.
+
+### Préparation
+
+- Dans la première ligne, remplacer le `g` par un `h`.
+
+```python
+from workshop.fr.h import *
+
+…
+
+def majCorps(nombreErreurs):    
+    …
+
+go(globals())
+```
+
+### Tâches
+
+- Retirer du *tuple* `PARTIES_CORPS` la constante `P_VISAGE` ;
+- modifier le code de la fonction `majCorps` pour dessiner explicitement le visage (utilisation de la constante `P_VISAGE`) lorsque la dernière partie du corps, tel que contenue dans `PARTIES_CORPS`, est dessinée.
+
+On pourra se servir de la taille du *tuple* pour détecter quand est dessinée la dernière partie du corps.
+
+### Pseudo-code
+
+> Dessiner la partie du corps correspondant à `nombreErreurs`
+>
+> Si `nombreErreur` supérieur au nombre d'erreurs autorisées  
+> &nbsp;&nbsp;Dessiner le visage
+
+### Aperçu
+
+Le même que pour l'exercice précédent.
+
+### Tests
+
+Reprendre les tests de l'exercice précédent, et vérifier qu'au lieu d'être dessiné à part, le visage est dessiné en même temps que la dernière partie du corps.
+

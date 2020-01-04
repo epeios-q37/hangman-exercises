@@ -4,77 +4,47 @@ import sys
 sys.path.append(".")
 from workshop.fr.g import *
 
-MONTRER_MOT_SECRET = VRAI
+DIVULGUER_MOT_SECRET = VRAI
 
 """
-Quelques variables vont être gérées par l'élève. Leur nom est libre.
-Peut être omis, vu que 'raz(…)' va être appelé avant utilisation
-de ces variables.
+Á des fins de simplification, les fonctions développées par l'étudiant dans les
+précédents exercices font appels à des fonctions internes. Bien entendu, les
+étudiants utiliseront le code qu'ils ont écrits lors des précédents exercices.
 """
-motSecret = ""
-bonnesPioches = ""
-nbErreurs = 0
 
-"""
-NOTA: les quatres fonctions suivantes ne sont pas utilisées en-dehors de ce fichier.
-"""
 
 def choisirMot(*args):
   return workshop.rfPickWord(*args)
 
 
 def lettreEstDansMot(*args):
-  return workshop.rfIsLetterInWord(*args)
+    return workshop.rfIsLetterInWord(*args)
 
 
 def donnerMasque(*args):
-  return workshop.rfGetMask(*args)
+    return workshop.rfGetMask(*args)
+    
 
-
-def majCorps(*args):
-  return workshop.rfUpdateBody(*args)
-
+"""
+Version alternative utilisant un tuple.
+"""
+PARTIES_CORPS = (
+  P_TETE,
+  P_TRONC,
+  P_BRAS_GAUCHE,
+  P_BRAS_DROIT,
+  P_PIED_GAUCHE,
+  P_PIED_DROIT,
+  P_VISAGE
+)
 
 
 """
-Réinitialiser les variables et l'affichage pour une nouvelle partie et
-retourner le mot secret.
+- 'nbErreurs': nombre d'erreurs.
+Dessiner la partie du corps correspondant au nombre d'erreurs.
 """
-def reinitialiser(suggestion,motAuHasard):
-  global motSecret,bonnesPioches,nbErreurs
+def majCorps(nombreErreurs):
+  dessinerPartieCorps(PARTIES_CORPS[nombreErreurs-1])
 
-  motSecret = choisirMot(suggestion,motAuHasard)
-  bonnesPioches = ""
-  nbErreurs = 0
-  print(motSecret)
-  redessiner()
-  effacerEtAfficher(donnerMasque(motSecret,""))
-
-  return motSecret
-
-  
-
-"""
-N.B. : NON 'THREAD-SAFE' !!!
-De multiples instances peuvent être lancées pour montrer
-en quoi cela pose problème.
-"""
-"""
-- 'pioche': la lettre choisie par le joueur,
-- 'mot': le mot secret,
-- 'parties': (tuple) les différentes parties du corps.
-Si 'pioche' est dans 'lettre', met à jour du masque,
-sinon met à jour du dessin du pendu. 
-"""
-def traiterPioche(pioche,parties):
-  global bonnesPioches,nbErreurs
-
-  if lettreEstDansMot(pioche,motSecret): # Test non obligatoire.
-    if not lettreEstDansMot(pioche,bonnesPioches):
-      bonnesPioches += pioche
-      effacerEtAfficher(donnerMasque(motSecret,bonnesPioches))
-  else:
-    nbErreurs += 1
-    majCorps(parties,nbErreurs)
 
 go(globals())

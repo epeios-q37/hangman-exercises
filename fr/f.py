@@ -4,7 +4,7 @@ import sys
 sys.path.append(".")
 from workshop.fr.f import *
 
-MONTRER_MOT_SECRET = VRAI
+DIVULGUER_MOT_SECRET = VRAI
 
 """
 Á des fins de simplification, les fonctions développées par l'étudiant dans les
@@ -26,12 +26,8 @@ def donnerMasque(*args):
     
 
 """
-- 'parties' (tuple) contient les différentes parties du corps du pendu à
-  dessiner en fonction du nombre d'erreurs '(P_TETE,P_TRONC,P_BRAS_GAUCHE…)' ;
 - 'nbErreurs': nombre d'erreurs.
 Dessiner la partie du corps correspondant au nombre d'erreurs.
-Lorsque la dernière partie du corps est dessinée, le visage ('P_VISAGE') doit
-également être dessiné.
 """
 def majCorps(nombreErreurs):
   if nombreErreurs == 1:
@@ -49,7 +45,7 @@ def majCorps(nombreErreurs):
   elif nombreErreurs == 7:
     partieCorps = P_VISAGE
 
-  if ( nombreErreurs):
+  if nombreErreurs:
     dessinerPartieCorps(partieCorps)
 
 go(globals())

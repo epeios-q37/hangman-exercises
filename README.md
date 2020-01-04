@@ -7,7 +7,7 @@
 
 # Modern programming exercises, featuring the [Hangman game](https://q37.info/s/gtdtk4hp).
 
-*To French-speaking teachers / pour les enseignants francophones* : la documentation en français pour une utilisation de ces exercices en cours de programmation : <https://q37.info/s/mmdnch9t>.
+*Enseignants (French-speaking teachers)* : notice en français pour utiliser ces exercices en cours : <https://q37.info/s/mmdnch9t>.
 
 [![Run on Repl.it](https://repl.it/badge/github/epeios-q37/hangman-exercises)](https://q37.info/s/z3whmbfz) [![License](https://img.shields.io/pypi/l/atlastk.svg?style=plastic)](https://github.com/epeios-q37/hangman-exercises/blob/master/LICENSE)
 
@@ -15,7 +15,7 @@ This project shows an example of modern programming exercises, featuring the [Ha
 
 [![Hangman](https://q37.info/s/pnmjfw39)](https://q37.info/s/jtdqjsx7)
 
-Simply retrieve the repository (`git clone https://github.com/epeios-q37/hangman-exercises`, or get the corresponding *ZIP* file here: <https://q37.info/s/f7mt4s7n>), and, in a console, in the root directory of the repository, launch `python main.py` (you can change the language of the exercises by modifying `main.py`). You can also specifically launch an exercise with `python (en|fr)/(a|b|…|h|i).py` (for example: `python fr/b.py`). You can (should) also use `python3` instead of `python`.
+Simply retrieve the repository (`git clone https://github.com/epeios-q37/hangman-exercises`, or get the corresponding *ZIP* file here: <https://q37.info/s/f7mt4s7n>), and, in a console, in the root directory of the repository, launch `python main.py` (you can change the language of the exercises by modifying `main.py`). You can also specifically launch an exercise with `python (en|fr)/(a|b|…|k|l).py` (for example: `python fr/b.py`). You can (should) also use `python3` instead of `python`.
 
 Alternatively, you can also use [*Repl.it*](https://q37.info/s/srnnb7hj), so you have nothing to install on your computer. Follow this [link](https://q37.info/s/z3whmbfz), click on the green `run` button, select an exercise, and then click on (or scan) the then displayed [QR code](https://q37.info/s/3pktvrj7). To choose another exercise, click on the green `restart` button.
 
@@ -52,7 +52,7 @@ French version (note the `fr` in the `from workshop.fr.a import *` line):
 
 from workshop.fr.a import *
 
-MONTRER_MOT_SECRET = VRAI
+DIVULGUER_MOT_SECRET = VRAI
 
 def choisirMot(suggestion):
 

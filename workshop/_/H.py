@@ -26,41 +26,4 @@ SOFTWARE.
 import sys
 sys.path.append("workshop/_")
 
-import educ as _
-
-from workshop._._ import *
-
-
-class Core(_.Core):
-  def __init__(self,dom):
-    _.Core.__init__(self,dom,ucHangman()())
-
-
-def _reset(hangman):
-  baseReset(hangman,getRandomWord())
-
-
-def _acConnect(core):
-  show()
-  _reset(core.userObject)
-
-
-def _Submit(hangman,letter):
-  ufHandleGuess()(hangman,letter,getBodyParts())
-
-
-def _acSubmit(core,dom,id):
-  _Submit(core.userObject,id.lower())
-
-
-def _acRestart(core):
-  _reset(core.userObject)
-
-
-def main(callback,userFunctions,userFunctionLabels):
-  mainBase(callback,globals(),
-  (
-    UC_HANGMAN,
-    UF_RESET,
-    UF_HANDLE_GUESS,
-  ),userFunctions,userFunctionLabels)
+from G import *

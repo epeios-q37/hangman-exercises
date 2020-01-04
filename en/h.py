@@ -4,11 +4,11 @@ import sys
 sys.path.append(".")
 from workshop.en.h import *
 
-SHOW_SECRET_WORD = TRUE
+DISCLOSE_SECRET_WORD = TRUE
 
 
 def pickWord(*args):
-  return workshop.rfPickWord(*args)
+    return workshop.rfPickWord(*args)
 
 
 def isLetterInWord(*args):
@@ -19,57 +19,31 @@ def getMask(*args):
     return workshop.rfGetMask(*args)
 
 
-def updateBody(*args):
-  return workshop.rfUpdateBody(*args)
+"""
+"P_FACE' is deliberately omitted (see next function).
+"""
+BODY_PARTS = (
+  P_HEAD,
+  P_TRUNK,
+  P_LEFT_ARM,
+  P_RIGHT_ARM,
+  P_LEFT_LEG,
+  P_RIGHT_LEG,
+#  P_FACE 
+)
 
 
 """
-Let's introduce object-oriented programmation.
-Class name must be 'Hangman',
-but variables and methods name are free.
+- 'errorsAmount': the amount of errors.
+Draw the part of the body corresponding to the amount of errors.
+When the last part of the body is drawn, the face ('P_FACE') must
+also be drawn.
 """
-class Hangman:
-  def reset(self,suggestion,randomWord):
-    self.secretWord = pickWord(suggestion,randomWord)
-    self.goodGuesses = ""
-    self.errorsAmount = 0
+def updateBody(errorsAmount):
+  drawBodyPart(BODY_PARTS[errorsAmount-1])
 
-  def __init__(self):
-    self.secretWord = ""
-    self.goodGuesses = ""
-    self.errorsAmount = 0
+  if errorsAmount >= len(BODY_PARTS):
+    drawBodyPart(P_FACE)
 
-  """
-  Update the good guesses ot the amount of errors wether 'guess' is
-  good ot not. Return TRUE if 'guess' is good, FALSE otherwise.
-  """
-  def handleAndTestGuess(self,guess):
-    if isLetterInWord(guess,self.secretWord):
-      if not isLetterInWord(guess,self.goodGuesses):
-        self.goodGuesses += guess
-      return TRUE
-    else:
-      self.errorsAmount += 1
-      return FALSE
-
-
-"""
-Same as previous exercise, but this time we use an object. 
-"""
-def reset(hangman,suggestion,randomWord):
-  hangman.reset(suggestion,randomWord)
-  print(hangman.secretWord)
-  eraseAndDisplay(getMask(hangman.secretWord,""))
-
-  return hangman.secretWord
-
-"""
-Idem.
-"""
-def handleGuess(hangman,guess,parts):
-  if hangman.handleAndTestGuess(guess):
-    eraseAndDisplay(getMask(hangman.secretWord,hangman.goodGuesses))
-  else:
-    updateBody(parts,hangman.errorsAmount)
 
 go(globals())

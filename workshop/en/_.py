@@ -35,6 +35,7 @@ P_LEFT_ARM = _.P_LEFT_ARM
 P_RIGHT_ARM = _.P_RIGHT_ARM
 P_LEFT_LEG = _.P_LEFT_LEG
 P_RIGHT_LEG = _.P_RIGHT_LEG
+P_AMOUNT = _.P_AMOUNT
 
 WORDS = (
   "accommodate","afterthought","allegiance","aloft","ancestor","anticipation","antics",
@@ -62,7 +63,7 @@ BODY_PARTS = (
 
 USER_ITEM_LABELS = {
   _.UC_HANGMAN: "Hangman",
-  _.UV_SHOW_SECRET_WORD: "SHOW_SECRET_WORD",
+  _.UV_DISCLOSE_SECRET_WORD: "DISCLOSE_SECRET_WORD",
   _.UF_GET_MASK: "getMask",
   _.UF_HANDLE_GUESS: "handleGuess",
   _.UF_IS_LETTER_IN_WORD: "isLetterInWord",
@@ -92,30 +93,9 @@ _.setBodyParts(BODY_PARTS)
 _.setAppTitle("Hangman game workshop")
 
 
-def redraw():
-  _.redraw()
-
-
-def drawBodyPart(part):
-  _.drawBodyPart(part)
-
-
-def erase():
-  _.clear()
-
-
-def display(text):
-  _.display(text)
-
-
-def eraseAndDisplay(text):
-  _.clearAndDisplay(text)
-
-
-def notify(text):
-  _.alert(text)
-
-
-def ask(text):
-  return _.confirm(text)
-
+redraw = _.redraw
+drawBodyPart= _.drawBodyPart
+display =  _.display
+discloseSecretWord = _.discloseSecretWord  
+notify =  _.alert
+ask = _.confirm
