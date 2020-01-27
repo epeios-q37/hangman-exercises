@@ -11,7 +11,7 @@ def choisirMot(*args):
   return workshop.rfPickWord(*args)
 
 
-def isLetterInWord(*args):
+def lettreEstDansMot(*args):
     return workshop.rfIsLetterInWord(*args)
 
 
@@ -24,39 +24,32 @@ def majCorps(*args):
 
 
 """
-Allons-y avec la programmation orientée objet.
-Le nom de la classe doit être 'Pendu',
-mais le nom des variables et des méthodes est libre.
+Ajout de la gestion du mot à deviner ('motSecret').
 """
 class Pendu:
   def raz(self,suggestion,motAuHasard):
     self.motSecret = choisirMot(suggestion,motAuHasard)
     self.bonnesPioches = ""
-    self.nbErreurs = 0
+    self.nombreErreurs = 0
 
   def __init__(self):
     self.motSecret = ""
     self.bonnesPioches = ""
-    self.nbErreurs = 0
+    self.nombreErreurs = 0
     
-  """
-  Mettre à jour le nombre d'erreurs ou les bonnes pioches selon
-  que 'pioche' est correct ou non.
-  Si 'pioche' est bon, retourner VRAI, sinon retourner FAUX.
-  """
   def traiterEtTesterPioche(self,pioche):
-    if isLetterInWord(pioche,self.motSecret):
-      if not isLetterInWord(pioche,self.bonnesPioches):
+    if lettreEstDansMot(pioche,self.motSecret):
+      if not lettreEstDansMot(pioche,self.bonnesPioches):
         self.bonnesPioches += pioche
       return VRAI
     else:
-      self.nbErreurs += 1
+      self.nombreErreurs += 1
       return FAUX
 
 
 """
-Pareil que pour le précédent exercice,
-sauf que l'on utilise un objet.
+Utilisation du mot à deviner stocké dans 'pendu' ('pendu.motSecret').
+Divulgation ou non du mot à deviner selon configuration.
 """
 def raz(pendu,suggestion,motAuHasard):
   pendu.raz(suggestion,motAuHasard)
@@ -67,13 +60,10 @@ def raz(pendu,suggestion,motAuHasard):
     divulguerMotSecret( pendu.motSecret )
   
 
-"""
-Idem.
-"""
 def traiterPioche(pendu,pioche):
   if pendu.traiterEtTesterPioche(pioche):
     afficher(donnerMasque(pendu.motSecret,pendu.bonnesPioches))
   else:
-    majCorps(pendu.nbErreurs)
+    majCorps(pendu.nombreErreurs)
 
 go(globals())

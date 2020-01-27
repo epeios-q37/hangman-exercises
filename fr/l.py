@@ -12,48 +12,11 @@ def choisirMot(*args):
 
 
 def lettreEstDansMot(*args):
-    return workshop.rfIsLetterInWord(*args)
-
-
-def majCorps(*args):
-  return workshop.rfUpdateBody(*args)
+  return workshop.rfIsLetterInWord(*args)
 
 
 """
-En premier lieu, ne pas traiter la variable membre
-'enCours' de la class 'Pendu'.
-"""
-
-"""
-Ajouter le traitement de la variable 'enCours'.
-Ne concerne que les méthodes 'raz(…)'
-et '__init__(…)'.
-"""
-class Pendu:
-  def raz(self,suggestion,motAuHasard):
-    self.motSecret = choisirMot(suggestion,motAuHasard)
-    self.bonnesPioches = ""
-    self.nbErreurs = 0
-    self.enCours = VRAI
-
-  def __init__(self):
-    self.motSecret = ""
-    self.bonnesPioches = ""
-    self.nbErreurs = 0
-    self.enCours = FAUX
-    
-  def traiterEtTesterPioche(self,pioche):
-    if lettreEstDansMot(pioche,self.motSecret):
-      if not lettreEstDansMot(pioche,self.bonnesPioches):
-        self.bonnesPioches += pioche
-      return VRAI
-    else:
-      self.nbErreurs += 1
-      return FAUX
-
-
-
-"""
+Anciennement nommée 'donnerMasque'
 Ajouter le test.
 """
 def donnerMasqueEtTesterSiVictoire(mot,pioches):
@@ -67,31 +30,53 @@ def donnerMasqueEtTesterSiVictoire(mot,pioches):
       masque += "_"
       victoire = FAUX
 
-  return masque,victoire
+  return masque,victoire    
 
 
 """
 Ajouter le test.
 """
-def majCorpsEtTesterSiDefaite(nbErreurs):
-  majCorps(nbErreurs)
+def majCorpsEtTesterSiDefaite(nombreErreurs):
+  workshop.rfUpdateBody(nombreErreurs)
 
-  return nbErreurs >= ( P_NOMBRE - 1 )
+  return nombreErreurs >= ( P_NOMBRE - 1 )
+
 
 
 """
-Ajouter le test.
+En premier lieu, ne pas traiter la variable membre
+'enCours' de la classe 'Pendu'.
 """
-def traiterPioche(pendu,pioche):
-  if pendu.traiterEtTesterPioche(pioche):
-    masque,victoire = donnerMasqueEtTesterSiVictoire(pendu.motSecret,pendu.bonnesPioches)
-    afficher(masque)
-    if victoire and pendu.enCours:
-      notifier("Tu as gagné ! Félicitations !")
-      pendu.enCours = FAUX
-  elif pendu.enCours and majCorpsEtTesterSiDefaite(pendu.nbErreurs):
-    notifier("\nPerdu !\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nbErreurs,len(pendu.bonnesPioches),pendu.motSecret))
-    pendu.enCours = FAUX
+
+"""
+Ajouter le traitement de la variable 'enCours'.
+Ne concerne que les méthodes 'raz(…)'
+et '__init__(…)'.
+"""
+class Pendu:
+  def raz(self,suggestion,motAuHasard):
+    self.motSecret = choisirMot(suggestion,motAuHasard)
+    self.bonnesPioches = ""
+    self.nombreErreurs = 0
+    self.enCours = VRAI
+
+  def __init__(self):
+    self.motSecret = ""
+    self.bonnesPioches = ""
+    self.nombreErreurs = 0
+    self.enCours = FAUX
+    
+  def traiterEtTesterPioche(self,pioche):
+    if lettreEstDansMot(pioche,self.motSecret):
+      if not lettreEstDansMot(pioche,self.bonnesPioches):
+        self.bonnesPioches += pioche
+      return VRAI
+    else:
+      self.nombreErreurs += 1
+      return FAUX
+
+
+
 
 
 """
@@ -105,6 +90,19 @@ def raz(pendu,suggestion,motAuHasard):
   if DIVULGUER_MOT_SECRET:
     divulguerMotSecret(pendu.motSecret)
 
+"""
+Ajouter le test.
+"""
+def traiterPioche(pendu,pioche):
+  if pendu.traiterEtTesterPioche(pioche):
+    masque,victoire = donnerMasqueEtTesterSiVictoire(pendu.motSecret,pendu.bonnesPioches)
+    afficher(masque)
+    if victoire and pendu.enCours:
+      notifier("Tu as gagné ! Félicitations !")
+      pendu.enCours = FAUX
+  elif pendu.enCours and majCorpsEtTesterSiDefaite(pendu.nombreErreurs):
+    notifier("\nPerdu !\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nombreErreurs,len(pendu.bonnesPioches),pendu.motSecret))
+    pendu.enCours = FAUX
 
 
 """
@@ -127,7 +125,7 @@ Appelé lorsqu'une nouvelle partie est relancée.
 """
 def ARelance(pendu,suggestion,motAuHasard):
   if pendu.enCours:
-    notifier("\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nbErreurs,len(pendu.bonnesPioches),pendu.motSecret))
+    notifier("\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nombreErreurs,len(pendu.bonnesPioches),pendu.motSecret))
 
   raz(pendu,suggestion,motAuHasard)
 

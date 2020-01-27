@@ -398,13 +398,13 @@ Cela permet, dans certains cas, d'éviter un test inutile. Cependant, ce cas se 
 
 ```python
 bonnesPioches = ""
-nbErreurs = 0
+nombreErreurs = 0
 
 def raz(suggestion,motAuHasard):
-  global bonnesPioches,nbErreurs
+  global bonnesPioches,nombreErreurs
 
   bonnesPioches = ""
-  nbErreurs = 0
+  nombreErreurs = 0
 
   motSecret = choisirMot(suggestion,motAuHasard)
 
@@ -414,35 +414,254 @@ def raz(suggestion,motAuHasard):
 
 
 def traiterPioche(pioche,motSecret):
-  global bonnesPioches,nbErreurs
+  global bonnesPioches,nombreErreurs
 
   if lettreEstDansMot(pioche,motSecret):
     if not lettreEstDansMot(pioche,bonnesPioches):
       bonnesPioches += pioche
       afficher(donnerMasque(motSecret,bonnesPioches))
   else:
-    nbErreurs += 1
-    majCorps(nbErreurs)
+    nombreErreurs += 1
+    majCorps(nombreErreurs)
 ```
 
 #### Remarques
 
 Les deux premières lignes sont inutiles, la fonction `raz(…)` étant appelée avant toute utilisation d'une des deux variables. Cependant, c'est une bonne pratique pour la clarté du code (permet de repérer rapidement les variables globales).
 
-Veiller à ce que les élèves ne soient pas bloqués par l'absence de la ligne `global bonnesPioches,nbErreurs` dans les deux fonctions.
+Veiller à ce que les élèves ne soient pas bloqués par l'absence de la ligne `global bonnesPioches,nombreErreurs` dans les deux fonctions.
 
 Dans un premier temps, le test `if not lettreEstDansMot(pioche,bonnesPioches):` pourra être omis.
 
 Le paramètre `motAuHasard` de la fonction `raz(…)` ne sera peut-être pas utilisé ; cela dépendra de la manière dont la fonction `motAuHasard(…)`  aura été codée dans les précédents exercices.
 
-En lançant deux ou plusieurs instances simultanées, du fait que les variables `bonnesPioches` et `nbErreurs` sont communes à toutes les instances, il sera facile de montrer que les actions effectuées dans une instance influent les autres, notamment :
+En lançant deux ou plusieurs instances simultanées, du fait que les variables `bonnesPioches` et `nombreErreurs` sont communes à toutes les instances, il sera facile de montrer que les actions effectuées dans une instance influent les autres, notamment :
 
 - des lettres piochées disparaissent ou apparaissent de manière inopinée ;
 - le pendu est dessiné d'une manière inconsistante.
 
-À noter que ces problèmes de *thread-safety* ne sont **pas** présents dans les exercices précedents, car les variables `bonnesPioches` et `nbErreurs` sont gérés par le système en tenant compte de cette problématique.
+À noter que ces problèmes de *thread-safety* ne sont **pas** présents dans les exercices précedents, car les variables `bonnesPioches` et `nombreErreurs` sont directement gérées par des bibliothèques logicielles qui tiennent compte de cette problématique.
 
 
-## Autres exercices
+### Exercice *j*
 
-La partie des notices enseignant et élèves concernant ces exercices sont en cours d'élaboration, et devraient être disponibles d'ici une semaine ou deux.
+#### Particularités
+
+
+Programmation orientée objet :
+
+- Classe ;
+- fonction membre (méthode) ;
+- variable membre ;
+- constructeur ;
+- utilisation de la *POO* pour gérer le *thread-safety*.
+
+#### Solution
+
+```python
+class Pendu:
+  def raz(self):
+    self.bonnesPioches = ""
+    self.nombreErreurs = 0
+
+  def __init__(self):
+    self.raz()
+    
+  def traiterEtTesterPioche(self,pioche,motSecret):
+    if isLetterInWord(pioche,motSecret):
+      if not isLetterInWord(pioche,self.bonnesPioches):
+        self.bonnesPioches += pioche
+      return VRAI
+    else:
+      self.nombreErreurs += 1
+      return FAUX
+
+
+def raz(pendu,suggestion,motAuHasard):
+  pendu.raz()
+  motSecret = choisirMot(suggestion,motAuHasard)
+  print(motSecret)
+  afficher(donnerMasque(motSecret,""))
+
+  return motSecret
+  
+
+def traiterPioche(pendu,pioche,motSecret):
+  if pendu.traiterEtTesterPioche(pioche,motSecret):
+    afficher(donnerMasque(motSecret,pendu.bonnesPioches))
+  else:
+    majCorps(pendu.nombreErreurs)
+```
+
+#### Remarques
+
+On peut signaler que `monInstance.maFonction(…)` est équivalent à `maFonction(monInstance,…)`.
+
+### Exercice *k*
+
+#### Particularités
+
+- Utilisation d'une variable globale comme constante ;
+- type booléen ;
+- manipulation d'une instance de classe.
+
+#### Solution
+
+```python
+class Pendu:
+  def raz(self,suggestion,motAuHasard):
+    self.motSecret = choisirMot(suggestion,motAuHasard)
+    self.bonnesPioches = ""
+    self.nbErreurs = 0
+
+  def __init__(self):
+    self.motSecret = ""
+    self.bonnesPioches = ""
+    self.nbErreurs = 0
+    
+  def traiterEtTesterPioche(self,pioche):
+    if isLetterInWord(pioche,self.motSecret):
+      if not isLetterInWord(pioche,self.bonnesPioches):
+        self.bonnesPioches += pioche
+      return VRAI
+    else:
+      self.nbErreurs += 1
+      return FAUX
+
+
+def raz(pendu,suggestion,motAuHasard):
+  pendu.raz(suggestion,motAuHasard)
+  print(pendu.motSecret)
+  afficher(donnerMasque(pendu.motSecret,""))
+
+  if DIVULGUER_MOT_SECRET:
+    divulguerMotSecret( pendu.motSecret )
+  
+
+def traiterPioche(pendu,pioche):
+  if pendu.traiterEtTesterPioche(pioche):
+    afficher(donnerMasque(pendu.motSecret,pendu.bonnesPioches))
+  else:
+    majCorps(pendu.nbErreurs)
+```
+
+#### Remarques
+
+Néant
+
+### Exercice *l*
+
+#### Particularités
+
+- Renvoi de plusieurs valeurs par une fonction ;
+- construction d'une chaîne de caractères avec le contenu de variables ;
+- récupération des valeurs retournées par une fonction.
+
+#### Solution
+
+```python
+# Remplace 'donnerMasque(…)'
+def donnerMasqueEtTesterSiVictoire(mot,pioches):
+  masque = ""
+  victoire = VRAI
+
+  for lettre in mot:
+    if lettreEstDansMot(lettre,pioches):
+      masque += lettre
+    else:
+      masque += "_"
+      victoire = FAUX
+
+  return masque,victoire    
+
+
+# Remplace 'majCorps(…)'
+def majCorpsEtTesterSiDefaite(nombreErreurs):
+  if nombreErreurs <= len(PARTIES_CORPS)
+    dessinerPartieCorps(PARTIES_CORPS[nombreErreurs-1])
+
+  return nombreErreurs >= ( P_NOMBRE - 1 )
+
+
+class Pendu:
+  def raz(self,suggestion,motAuHasard):
+    self.motSecret = choisirMot(suggestion,motAuHasard)
+    self.bonnesPioches = ""
+    self.nbErreurs = 0
+    self.enCours = VRAI
+
+  def __init__(self):
+    self.motSecret = ""
+    self.bonnesPioches = ""
+    self.nbErreurs = 0
+    self.enCours = FAUX
+    
+  def traiterEtTesterPioche(self,pioche):
+    if lettreEstDansMot(pioche,self.motSecret):
+      if not lettreEstDansMot(pioche,self.bonnesPioches):
+        self.bonnesPioches += pioche
+      return VRAI
+    else:
+      self.nbErreurs += 1
+      return FAUX
+
+
+def donnerMasqueEtTesterSiVictoire(mot,pioches):
+  masque = ""
+  victoire = VRAI
+
+  for lettre in mot:
+    if lettreEstDansMot(lettre,pioches):
+      masque += lettre
+    else:
+      masque += "_"
+      victoire = FAUX
+
+  return masque,victoire
+
+
+def majCorpsEtTesterSiDefaite(nbErreurs):
+  majCorps(nbErreurs)
+
+  return nbErreurs >= ( P_NOMBRE - 1 )
+
+
+def traiterPioche(pendu,pioche):
+  if pendu.traiterEtTesterPioche(pioche):
+    masque,victoire = donnerMasqueEtTesterSiVictoire(pendu.motSecret,pendu.bonnesPioches)
+    afficher(masque)
+    if victoire and pendu.enCours:
+      notifier("Tu as gagné ! Félicitations !")
+      pendu.enCours = FAUX
+  elif pendu.enCours and majCorpsEtTesterSiDefaite(pendu.nbErreurs):
+    notifier("\nPerdu !\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nbErreurs,len(pendu.bonnesPioches),pendu.motSecret))
+    pendu.enCours = FAUX
+
+
+def raz(pendu,suggestion,motAuHasard):
+  pendu.raz(suggestion,motAuHasard)
+  print(pendu.motSecret)
+  afficher(donnerMasqueEtTesterSiVictoire(pendu.motSecret,"")[0])
+
+  if DIVULGUER_MOT_SECRET:
+    divulguerMotSecret(pendu.motSecret)
+
+
+def AConnexion(pendu,suggestion,motAuHasard):
+  return raz(pendu,suggestion,motAuHasard)
+
+
+def APioche(pendu,pioche):
+  traiterPioche(pendu,pioche)
+
+
+def ARelance(pendu,suggestion,motAuHasard):
+  if pendu.enCours:
+    notifier("\nErreurs : {} ; bonnes pioches : {}.\n\nLe mot à deviner était : '{}'.".format(pendu.nbErreurs,len(pendu.bonnesPioches),pendu.motSecret))
+
+  raz(pendu,suggestion,motAuHasard)
+```
+
+#### Remarques
+
+Pour la construction des chaînes de caractères passées à `notifier(…)`, on peut, dans un premier temps, utilisés l'écriture `notifier(… + … + …)`.

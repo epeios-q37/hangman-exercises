@@ -11,7 +11,7 @@ def choisirMot(*args):
   return workshop.rfPickWord(*args)
 
 
-def isLetterInWord(*args):
+def lettreEstDansMot(*args):
     return workshop.rfIsLetterInWord(*args)
 
 
@@ -31,7 +31,7 @@ mais le nom des variables et des méthodes est libre.
 class Pendu:
   def raz(self):
     self.bonnesPioches = ""
-    self.nbErreurs = 0
+    self.nombreErreurs = 0
 
   def __init__(self):
     self.raz()
@@ -42,12 +42,12 @@ class Pendu:
   Si 'pioche' est bon, retourner VRAI, sinon retourner FAUX.
   """
   def traiterEtTesterPioche(self,pioche,motSecret):
-    if isLetterInWord(pioche,motSecret):
-      if not isLetterInWord(pioche,self.bonnesPioches):
+    if lettreEstDansMot(pioche,motSecret):
+      if not lettreEstDansMot(pioche,self.bonnesPioches):
         self.bonnesPioches += pioche
       return VRAI
     else:
-      self.nbErreurs += 1
+      self.nombreErreurs += 1
       return FAUX
 
 
@@ -71,6 +71,6 @@ def traiterPioche(pendu,pioche,motSecret):
   if pendu.traiterEtTesterPioche(pioche,motSecret):
     afficher(donnerMasque(motSecret,pendu.bonnesPioches))
   else:
-    majCorps(pendu.nbErreurs)
+    majCorps(pendu.nombreErreurs)
 
 go(globals())
