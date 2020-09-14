@@ -2,7 +2,7 @@
 
 *Enseignants (French-speaking teachers)* : notice en français pour utiliser ces exercices en cours : <https://q37.info/s/mmdnch9t>.
 
-[![Run on Repl.it](https://q37.info/s/kpm7xhfm.png)](https://q37.info/s/z3whmbfz)
+[![Run on Repl.it](https://q37.info/s/kpm7xhfm.png)](https://q37.info/s/z3whmbfz) [![About online demonstrations](https://img.shields.io/badge/about-online%20demonstrations-informational)](https://q37.info/s/sssznrb4)
 
 [![license: MIT](https://img.shields.io/github/license/epeios-q37/atlas-python?color=yellow&style=for-the-badge)](https://github.com/epeios-q37/hangman-exercises/blob/master/LICENSE)
 
